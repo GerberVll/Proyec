@@ -11,6 +11,7 @@ using System.Media;
 using System.Configuration;
 using System.Data.SqlClient;
 using Proyec.NuevoSpa;
+using Npgsql;
 
 namespace Proyec
 {
@@ -21,6 +22,34 @@ namespace Proyec
             InitializeComponent();
         }
 
+        public void ConexPostgres()
+        {
+            try
+            {
+                NpgsqlConnection cn = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=Proveedores;User Id=postgres;Password=password;");
+                //String str = "Server=127.0.0.1;Port=5432;Database=Proveedores;User Id=postgres;Password=password;";
+                NpgsqlCommand cm = new NpgsqlCommand("SELECT usuario,pass FROM usuarios WHERE usuario='" + textUser.Text+"' AND pass='"+ textPass.Text+"'",cn);
+                cn.Open();
+                NpgsqlDataReader dr = cm.ExecuteReader();
+                if (dr.Read())
+                {
+                    MessageBox.Show("Login Correcto");
+                }
+                else
+                {
+                    MessageBox.Show("Usuario o contraseña incorrecta");
+                }
+
+
+   
+                
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         public void abriform2()
         {
             this.Hide();//oculta el formulario anterior cuando se abre otro.
@@ -85,6 +114,8 @@ namespace Proyec
 
             // Establecer la ubicación del formulario
             this.Location = new Point(x, y);
+
+            
         }
         
         
@@ -105,10 +136,38 @@ namespace Proyec
 
         private void btnDetener_Click(object sender, EventArgs e)
         {
-            logins();//Llama el metodo que contiene la conexion a la base de datos y comprueba los datos ingresados.
+            //Llama el metodo que contiene la conexion a la base de datos y comprueba los datos ingresados.
+
+            try
+            {
+                String selectedDataBase = comboEleccion.SelectedItem.ToString();
+
+                
+                    if (selectedDataBase == "SQL Server")
+                    {
+                        logins();
+                    }
+                    else if (selectedDataBase == "PostgreSQL")
+                    {
+                        ConexPostgres();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Por favor seleccione una base de datos valida.");
+                }
+                
+            
         }
 
+
         private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }

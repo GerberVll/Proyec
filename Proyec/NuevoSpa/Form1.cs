@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Proyec.botonesM;
 namespace Proyec.NuevoSpa
 {
     public partial class MENU : Form
@@ -15,6 +15,13 @@ namespace Proyec.NuevoSpa
         public MENU()
         {
             InitializeComponent();
+        }
+        public void abrirPro()
+        {
+            this.Hide();//oculta el formulario anterior cuando se abre otro.
+            Proveedores Fproveedores= new Proveedores();//abre el formulario2(menu).
+            Fproveedores.ShowDialog();//abre el fomrulario en forma de cuadro de dialogo.
+            this.Show();//vuelve a mostrar el formulario anterior cuando se cierra el actual.
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -40,6 +47,11 @@ namespace Proyec.NuevoSpa
         private void button3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnProveedores_Click(object sender, EventArgs e)
+        {
+            abrirPro();
         }
     }
 }
